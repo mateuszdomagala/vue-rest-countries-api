@@ -9,14 +9,17 @@
     --background-color: hsl(0, 0%, 98%);
     --box-color: hsl(0, 0%, 100%);
   }
+
   [data-theme="dark"] {
     --font-color: hsl(0, 0%, 100%);
     --box-color: hsl(209, 23%, 22%);
     --background-color: hsl(207, 26%, 17%);
   }
+
   * {
     box-sizing: border-box;
   }
+  
   body {
     font-family: 'Nunito Sans', sans-serif;
     color: var(--font-color);

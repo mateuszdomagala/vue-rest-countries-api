@@ -2,11 +2,8 @@
   <div class="wrapper">
     <div v-if="error">{{ error }}</div>
     <div v-if="countries">
-      <div v-for="country in countries" :key="country.alpha3Code">
-        {{ country.name }}
-        {{ country.population }}
-        {{ country.region }}
-        {{ country.capital }}
+      <div v-if="countries" class="grid">
+        <countries-list :countries="countries" />
       </div>
     </div>
   </div>
@@ -14,10 +11,12 @@
 
 <script>
 import { onMounted, ref } from 'vue';
+import CountriesList from '../components/CountriesList.vue'
 
 export default {
   name: "Home",
   components: {
+    CountriesList
   },
   setup() {
     const countries = ref(null)
@@ -42,5 +41,12 @@ export default {
     max-width: 1440px;
     margin: 0 auto;
     padding: 20px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 60px 20px;
+    justify-items: center;
   }
 </style>
