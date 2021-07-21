@@ -1,26 +1,33 @@
 <template>
   <div class="wrapper">
+    <div class="flex">
+      <div>Search</div>
+      <filter-by-region @get-region="changeRegion" />
+    </div>
     <div v-if="error">{{ error }}</div>
     <div v-if="countries">
       <div v-if="countries" class="grid">
-        <countries-list :countries="countries" />
+        <countries-list :countries="filterByRegion" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import CountriesList from '../components/CountriesList.vue'
+import FilterByRegion from '../components/FilterByRegion.vue'
 
 export default {
   name: "Home",
   components: {
-    CountriesList
+    CountriesList,
+    FilterByRegion
   },
   setup() {
     const countries = ref(null)
     const error = ref(null)
+    const selectedRegion = ref('')
 
     onMounted(async () => {
       try {
@@ -31,7 +38,22 @@ export default {
       }
     }) 
 
-    return { countries, error }
+    const changeRegion = (region) => {
+      selectedRegion.value = region
+    }
+
+    const filterByRegion = computed( () => {
+        
+        if (countries.value && selectedRegion.value != 'Filter by Region') {
+            return countries.value
+              .filter(country => !country.region.indexOf(selectedRegion.value))
+        } else {
+            return countries.value
+        }
+    })
+
+
+    return { countries, error, changeRegion, filterByRegion }
   }
 };
 </script>
@@ -48,5 +70,15 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 60px 20px;
     justify-items: center;
+  }
+  
+  .flex {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 660px) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
   }
 </style>
