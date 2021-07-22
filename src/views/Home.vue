@@ -1,14 +1,12 @@
 <template>
   <div class="wrapper">
     <div class="flex">
-      <div>Search</div>
+      <search @get-keyword="searchCountry" />
       <filter-by-region @get-region="changeRegion" />
     </div>
     <div v-if="error">{{ error }}</div>
-    <div v-if="countries">
-      <div v-if="countries" class="grid">
-        <countries-list :countries="filterByRegion" />
-      </div>
+    <div v-if="countries" class="grid">
+      <countries-list :countries="filterCountries" />
     </div>
   </div>
 </template>
@@ -17,17 +15,20 @@
 import { onMounted, ref, computed } from 'vue';
 import CountriesList from '../components/CountriesList.vue'
 import FilterByRegion from '../components/FilterByRegion.vue'
+import Search from '../components/Search.vue'
 
 export default {
   name: "Home",
   components: {
     CountriesList,
-    FilterByRegion
+    FilterByRegion,
+    Search
   },
   setup() {
     const countries = ref(null)
     const error = ref(null)
     const selectedRegion = ref('')
+    const keyword = ref('')
 
     onMounted(async () => {
       try {
@@ -42,18 +43,22 @@ export default {
       selectedRegion.value = region
     }
 
-    const filterByRegion = computed( () => {
-        
-        if (countries.value && selectedRegion.value != 'Filter by Region') {
-            return countries.value
-              .filter(country => !country.region.indexOf(selectedRegion.value))
-        } else {
-            return countries.value
-        }
+    const searchCountry = (newKeyword) => {
+      keyword.value = newKeyword
+    }
+
+    const filterCountries = computed(() => {
+      return countries.value
+        .filter(country => country.name.toLowerCase().indexOf(keyword.value.toLowerCase()) > -1)
+        .filter(country => {
+          if (selectedRegion.value !== 'Filter by Region') {
+            return !country.region.indexOf(selectedRegion.value)
+          }
+        return countries.value
+      })
     })
 
-
-    return { countries, error, changeRegion, filterByRegion }
+    return { countries, error, changeRegion, searchCountry, filterCountries }
   }
 };
 </script>
