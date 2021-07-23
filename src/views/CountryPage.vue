@@ -1,0 +1,3 @@
+<template>
+    Country page
+</template>

@@ -1,6 +1,8 @@
 <template>
     <div v-for="country in countries" :key="country.alpha3Code">
-        <country :country="country"/>
+        <router-link :to="{ name: 'CountryPage', params: { name: country.name }}">
+            <country :country="country"/>
+        </router-link>
     </div>
 </template>
 
@@ -13,3 +15,10 @@ export default {
     components: { Country }
 }
 </script>
+
+<style lang="scss" scoped>
+  a {
+      text-decoration: none;
+      color: var(--font-color);
+  }
+</style>
