@@ -25,6 +25,11 @@ export default {
     border-radius: 5px;
     overflow: hidden;
     cursor: pointer;
+    transition: all .2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 
     img {
         width: 100%;
