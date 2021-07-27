@@ -75,6 +75,10 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 60px 20px;
     justify-items: center;
+
+    @media (min-width: 1420px) {
+      grid-gap: 60px;
+    }
   }
   
   .flex {
