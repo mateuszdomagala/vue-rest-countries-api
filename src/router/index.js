@@ -12,6 +12,7 @@ const routes = [
     path: '/:name',
     name: 'CountryPage',
     component: CountryPage,
+    props: true,
   }
 ];
 
