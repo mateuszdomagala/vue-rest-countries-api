@@ -16,7 +16,18 @@
                         <p class="country_paragraph"><span class="country__paragraph--bold">Currencies: </span><span v-for="(currency, index) in country.currencies" :key="index">{{ currency.name }}</span></p>
                         <p class="country_paragraph"><span class="country__paragraph--bold">Languages: </span><span v-for="(language, index) in country.languages" :key="index">{{ language.name + ' '}}</span></p>
                     </div>
-                </div>      
+                </div>  
+                <div class="country__borders">
+                    <p class="country__paragraph--bold">Border Countries: </p>
+                    <div v-if="borderCountries.length" class="country__borders__links"> 
+                        <div v-for="borderDetails in borderCountries" :key="borderDetails">
+                            <router-link :to="{ name: 'CountryPage', params: { name: borderDetails.name }}">
+                                {{ borderDetails.name }} 
+                            </router-link>
+                        </div>
+                    </div>     
+                    <div v-else>No border countries</div>
+                </div>
             </div>
         </div>
 </template>
@@ -29,17 +40,23 @@ export default {
     setup(props) {
         const country = ref(null)
         const error = ref(null)
+        const alpha3Codes = ref(null)
+        const borderCountries = ref(null)
         
         onMounted(async () => {
             try {
-                const res = await fetch(`https://restcountries.eu/rest/v2/name/${props.name}?fields=name;nativeName;population;region;subregion;capital;topLevelDomain;currencies;languages;borders;flag`)
-                country.value = await res.json()
+                const countryResponse = await fetch(`https://restcountries.eu/rest/v2/name/${props.name}?fields=name;nativeName;population;region;subregion;capital;topLevelDomain;currencies;languages;borders;flag`)
+                country.value = await countryResponse.json()
+                alpha3Codes.value = country.value[0].borders.join(';')
+
+                const bordersResponse = await fetch(`https://restcountries.eu/rest/v2/alpha?codes=${alpha3Codes.value}`)
+                borderCountries.value = await bordersResponse.json()
             } catch(e) {
                 error.value = e
             }
         })
 
-        return { country, error }
+        return { country, error, borderCountries }
     }   
 }
 </script>
@@ -91,6 +108,35 @@ export default {
         
         &--bold {
             font-weight: 600;
+        }
+    }
+
+    &__borders {
+        display: flex;
+        flex-direction: column;
+
+        @media (min-width: 1024px) {
+            flex-direction: row;
+        }
+
+        & p {
+            @media (min-width: 1024px) {
+                margin: 0 15px 0 0;
+            }
+        }
+
+        &__links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px 5px;
+
+            & a {
+                background-color: var(--box-color);
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+                color: var(--font-color);
+                padding: 5px 20px;
+                text-decoration: none;
+            }
         }
     }
   }
