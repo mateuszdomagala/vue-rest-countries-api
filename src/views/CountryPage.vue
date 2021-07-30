@@ -1,4 +1,7 @@
 <template>
+        <div class="back">
+            <router-link class="btn mg-top" :to="{ name: 'Home'}"><font-awesome-icon icon="arrow-left" />Back</router-link>
+        </div>
         <div class="country" v-for="country in country" :key="country.alpha3Code">
             <img class="country__image" :src="country.flag" alt="country flag">
             <div class="country__content">
@@ -138,6 +141,25 @@ export default {
                 text-decoration: none;
             }
         }
+    }
+  }
+
+  .back {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px;
+    
+    & a {
+        background-color: var(--box-color);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+        border-radius: 5px;
+        color: var(--font-color);
+        padding: 10px 35px;
+        text-decoration: none;
+    }
+
+    & .fa-arrow-left {
+        margin-right: 10px;
     }
   }
 </style>
