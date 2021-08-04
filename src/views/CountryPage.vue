@@ -1,8 +1,8 @@
 <template>
         <div class="back">
-            <router-link class="btn mg-top" :to="{ name: 'Home'}"><font-awesome-icon icon="arrow-left" />Back</router-link>
+            <router-link :to="{ name: 'Home'}"><font-awesome-icon icon="arrow-left" />Back</router-link>
         </div>
-        <div class="country" v-for="country in country" :key="country.alpha3Code">
+        <div v-if="country" class="country">
             <img class="country__image" :src="country.flag" alt="country flag">
             <div class="country__content">
                 <h2>{{ country.name }}</h2>
@@ -22,7 +22,7 @@
                 </div>  
                 <div class="country__borders">
                     <p class="country__paragraph--bold">Border Countries: </p>
-                    <div v-if="borderCountries.length" class="country__borders__links"> 
+                    <div v-if="borderCountries && borderCountries.length" class="country__borders__links"> 
                         <div v-for="borderDetails in borderCountries" :key="borderDetails">
                             <router-link :to="{ name: 'CountryPage', params: { name: borderDetails.name }}">
                                 {{ borderDetails.name }} 
@@ -50,7 +50,8 @@ export default {
             try {
                 const countryResponse = await fetch(`https://restcountries.eu/rest/v2/name/${props.name}?fields=name;nativeName;population;region;subregion;capital;topLevelDomain;currencies;languages;borders;flag`)
                 country.value = await countryResponse.json()
-                alpha3Codes.value = country.value[0].borders.join(';')
+                country.value = country.value[0]
+                alpha3Codes.value = country.value.borders.join(';')
 
                 const bordersResponse = await fetch(`https://restcountries.eu/rest/v2/alpha?codes=${alpha3Codes.value}`)
                 borderCountries.value = await bordersResponse.json()
