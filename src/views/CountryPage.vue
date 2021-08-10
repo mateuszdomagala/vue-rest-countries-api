@@ -83,7 +83,8 @@ export default {
     }
 
     &__image {
-        width: 100%;
+            width: 450px;
+            height: 450px;
     }
 
     &__content {
