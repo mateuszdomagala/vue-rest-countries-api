@@ -83,8 +83,11 @@ export default {
     }
 
     &__image {
-            width: 450px;
-            height: 450px;
+            width: 100%;
+            
+            @media (min-width: 1024px) {
+                width: 450px;
+        }
     }
 
     &__content {
