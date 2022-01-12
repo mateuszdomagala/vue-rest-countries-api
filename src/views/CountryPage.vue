@@ -48,12 +48,12 @@ export default {
         
         onMounted(async () => {
             try {
-                const countryResponse = await fetch(`https://restcountries.eu/rest/v2/name/${props.name}?fields=name;nativeName;population;region;subregion;capital;topLevelDomain;currencies;languages;borders;flag`)
+                const countryResponse = await fetch(`https://restcountries.com/v2/name/${props.name}?fields=name,nativeName,population,region,subregion,capital,topLevelDomain,currencies,languages,borders,flag`)
                 country.value = await countryResponse.json()
                 country.value = country.value[0]
-                alpha3Codes.value = country.value.borders.join(';')
+                alpha3Codes.value = country.value.borders.join(',')
 
-                const bordersResponse = await fetch(`https://restcountries.eu/rest/v2/alpha?codes=${alpha3Codes.value}`)
+                const bordersResponse = await fetch(`https://restcountries.com/v2/alpha?codes=${alpha3Codes.value}`)
                 borderCountries.value = await bordersResponse.json()
             } catch(e) {
                 error.value = e

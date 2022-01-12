@@ -39,6 +39,8 @@ export default {
         border: 0;
         background-color: inherit;
         color: inherit;
+        width: 80%;
+        outline: 0;
     }
 
     @media (min-width: 660px) {
