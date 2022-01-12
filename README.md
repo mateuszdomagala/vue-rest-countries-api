@@ -1,6 +1,6 @@
 # Frontend Mentor - REST Countries API with color theme switcher
 
-This is a solution to the [REST Countries API with color theme switcher](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca) challenge on [Frontend Mentor](https://www.frontendmentor.io). The challenge was to integrate with the [REST Countries API](https://restcountries.eu/) to pull country data and display it like in the designs. This project was built to practice Vue.js and GitHub flow.
+This is a solution to the [REST Countries API with color theme switcher](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca) challenge on [Frontend Mentor](https://www.frontendmentor.io). The challenge was to integrate with the [REST Countries API](https://restcountries.com/) to pull country data and display it like in the designs. This project was built to practice Vue.js and GitHub flow.
 
 Live Site URL: https://vue-rest-countries-api.vercel.app/
 
