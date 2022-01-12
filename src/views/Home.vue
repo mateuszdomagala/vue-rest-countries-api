@@ -32,7 +32,7 @@ export default {
 
     onMounted(async () => {
       try {
-        const res = await fetch('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag;alpha3Code')
+        const res = await fetch('https://restcountries.com/v2/all?fields=name,capital,region,population,flag,alpha3Code')
         countries.value = await res.json()
       } catch(e) {
         error.value = e
